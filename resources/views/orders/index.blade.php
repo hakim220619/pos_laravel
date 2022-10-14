@@ -11,11 +11,6 @@
         }
     </style>
     @include('sweetalert::alert')
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Success!</strong> {{ $message }}
-        </div>
-    @endif
     <div class="d-flex flex-column-fluid">
         <div class="container">
             <div class="card card-custom">
@@ -34,8 +29,8 @@
                         <div class="card-body">
                             <!--begin: Datatable-->
                             <div class="table-responsive text-nowrap" style="width: 710px">
-                                <table class="table table-bordered table-hover table-checkable table-responsive layui-table"
-                                    id="datatabless" style="margin-top: 13px !important, margin-right:13px;">
+                                <table class="table table-bordered table-hover table-checkable table-responsive"
+                                    id="data_order" style="margin-top: 13px !important, margin-right:13px;">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -88,12 +83,18 @@
                                                     <h4 class="modal-title" id="myModalLabel">Yakin Pembelian Sudah Benar?
                                                     </h4>
                                             </div>
-                                            <form class="form-horizontal">
+                                            <form action="/struck" class="form-horizontal">
                                                 <div class="modal-body">
                                                     <div class="alert alert-info">
                                                         <p>Tekan Bayar Jika Sudah Benar</p>
                                                     </div>
                                                 </div>
+                                                <input type="text" class="form-control form-control-solid"
+                                                    placeholder="Generate Otomatis" readonly value="{{ rand(0000, 9999) }}"
+                                                    name="id_transaction" id="id_transaction" hidden />
+                                                <input type="text" class="form-control form-control-solid"
+                                                    placeholder="Generate Otomatis" readonly value="{{ $id }}"
+                                                    name="id_user" id="id_user" hidden />
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Close</button>
@@ -148,8 +149,7 @@
                 </div>
                 <div class="row" style="margin-left: 0px;">
                     <div class="col-md-5">
-                        <input type="text" class="form-control form-control-solid" placeholder="Generate Otomatis"
-                            readonly value="{{ rand(0000, 9999) }}" name="id_transaction" id="id_transaction" hidden />
+
                         <div class="form-group">
                             <label>Id Cabang<span class="text-danger">*</span></label>
                             <input type="text" class="form-control form-control-solid" placeholder="Generate Otomatis"
@@ -167,13 +167,6 @@
                                 readonly value="{{ $id }}" name="id_user" id="id_user" hidden />
                         </div>
                     </div>
-                    {{-- <div class="col-md-5">
-                    <div class="form-group">
-                        <label>Tanggal<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Generate Otomatis"
-                            readonly value="{{ date('d-m-Y') }}" name="tanggal" id="tanggal" />
-                    </div>
-                </div> --}}
                     <div class="col-md-10">
                         <div class="form-group gettotalbarang">
                         </div>
@@ -184,7 +177,6 @@
                             </label>
                             <input type="text" id="cash" name="cash" onkeyup="getcashback(this.value)"
                                 class="form-control rupiah" min="0" max="100" required>
-                            {{-- <input type="number" class="form-control " name="bayar" id="bayar"> --}}
                         </div>
                     </div>
                     <div class="col-md-10">
@@ -192,7 +184,6 @@
                             <label>Kembalian<span class="text-danger">*</span></label>
                             <input type="text" id="caseback" class="form-control form-control-solid" readonly
                                 name="caseback" min="0" max="100">
-                            {{-- <input type="number" class="form-control " name="bayar" id="bayar"> --}}
                         </div>
                     </div>
                     <div class="col-md-10" id="lunas-modal">
@@ -216,7 +207,6 @@
                         </button>
                     </div>
                     <div class="card-body">
-                        <!--begin: Datatable-->
                         <div class="table-responsive text-nowrap">
                             <table class="table table-bordered table-hover table-checkable table-responsive"
                                 id="datatable" style="margin-top: 13px !important, margin-right:13px;">
@@ -241,9 +231,6 @@
                                 </tbody>
 
                             </table>
-                            {{-- {{ $data->links() }} --}}
-
-                            <!--end: Datatable-->
                         </div>
                     </div>
                 </div>
@@ -256,7 +243,8 @@
             tampil_data_product();
             tampil_data_barang();
             gettotalbelanja();
-            $('#datatabless').dataTable();
+
+            // $('#data_order').dataTable();
 
             function tampil_data_barang() {
                 $.ajax({
@@ -318,6 +306,7 @@
                     async: true,
                     dataType: 'json',
                     success: function(data) {
+                        // console.log(data);
                         var html = '';
                         var i;
                         var no = 1;
@@ -350,6 +339,7 @@
                                 '<td nowrap="nowrap">' + button + '</td>' +
                                 '</tr>';
                         }
+                        // console.log(html);
                         $('#data_product').html(html);
                     }
                 });
@@ -375,17 +365,8 @@
                     }
                 });
             }
-
-            // function getcash() {
-            //     var html = '';
-            //     html =
-            //         ' <label>Di Bayar<span class="text-danger">*</span></label> <input type="text" id="rupiah" name="cash" onkeyup="getcashback(this.value)" class="form-control rupiah" min="0" max="100">'
-            //     $('.cash-all-lunas').html(html);
-            // }
             $("#datatable").on('click', '.btnSelect', function() {
-
                 var currentRow = $(this).closest("tr");
-                // var nama_barang = currentRow.find("input[type='text']").val();
                 var nama_barang = currentRow.find("input.nmbrg").val();
                 var kategori = currentRow.find("td:eq(2)").text();
                 var harga = currentRow.find("input.harga_jual").val();
@@ -420,7 +401,6 @@
                         tampil_data_barang();
                         gettotalbelanja();
                         tampil_data_product();
-                        // getcash();
                         $("#cash").val('');
                         $("#caseback").val('');
 
@@ -430,7 +410,7 @@
                 });
                 return false;
             });
-            //GET HAPUS
+            //MODAL HAPUS
             $('#show_data').on('click', '.item_hapus', function() {
                 var id = $(this).attr('data');
                 $('#ModalHapus').modal('show');
@@ -456,16 +436,12 @@
                         tampil_data_product();
                         tampil_data_barang();
                         gettotalbelanja();
-
-                        // getcash();
-
                     }
                 });
                 return false;
             });
 
-            $("#datatabless").on('change', '.jml_order_fix', function() {
-                // var id_barang = $('#id_brg_order').val();
+            $("#data_order").on('change', '.jml_order_fix', function() {
                 var currentRow = $(this).closest("tr");
                 var id = currentRow.find("input.id_brg_ordr").val();
                 var id_barang = currentRow.find("td:eq(2)").text();
@@ -473,7 +449,6 @@
                 var jml_order = currentRow.find('#jumlah_order').val();
                 var hrg = currentRow.find('#hrg').val();
                 var tot = hrg * jml_order;
-                // console.log(tot);
                 $.ajax({
                     url: '{{ route('order.change.jml') }}',
                     dataType: 'JSON',
@@ -488,7 +463,6 @@
                     success: function() {
                         tampil_data_barang();
                         gettotalbelanja();
-                        // getcash();
                         $("#cash").val('');
                         $("#caseback").val('');
                     }
@@ -497,11 +471,9 @@
             });
             $('#lunas-modal').on('click', '#lunas', function() {
                 $('#ModalLunas').modal('show');
-                // $('[name="id"]').val(id);
             });
             $('#lunas-modal').on('click', '#batal', function() {
                 $('#ModalBatal').modal('show');
-                // $('[name="id"]').val(id);
             });
             $('#lunas').on('click', function() {
                 var id_cabang = $('#id_cabang').val();
@@ -510,7 +482,7 @@
                 var jumlah = $('#jumlah').val();
                 var cash = $('#cash').val();
                 var cashback = $('#caseback').val();
-                console.log(id_transaction);
+                // console.log(id_transaction);
                 $.ajax({
                     url: '{{ route('order.add_orderdfix') }}',
                     dataType: 'JSON',
@@ -528,8 +500,12 @@
                         $("#cash").val('');
                         $("#caseback").val('');
                         tampil_data_product();
+                        getstruck();
+
                     }
+
                 })
+
             });
             $('#batal').on('click', function() {
                 var id_user = $('#id_user').val();
@@ -545,6 +521,7 @@
                         $("#cash").val('');
                         $("#caseback").val('');
                         tampil_data_product();
+                        alert("Pembelian Berhasil");
                     }
                 })
             });
@@ -613,6 +590,32 @@
         });
         $('.jml_order_fix').change(function() {
             $("#cash").val('');
+        });
+
+
+        $(document).ready(function() {
+            // $('#lunas-modal').on('load', '#lunas', function() {
+            //     $('#ModalLunas').modal('show');
+            // });
+
+            $('#lunas').click(function(event) {
+
+                var id_transaction = $('#id_transaction').val();
+                // console.log(id_transaction);
+                $.ajax({
+                    url: '{{ route('struck') }}',
+                    dataType: 'JSON',
+                    type: "get",
+                    data: {
+                        id_transaction: id_transaction,
+                    },
+                    success: function() {
+                        $('#ModalBatal').modal('show');
+                    }
+
+                });
+                // window.open("{{ route('struck') }}", "_blank");
+            });
         });
     </script>
 @endsection

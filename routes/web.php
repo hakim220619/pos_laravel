@@ -49,8 +49,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product', [ProductController::class, 'index'])->name('product');
     Route::get('/add_product', [ProductController::class, 'add_product'])->name('add_product');
     Route::post('/proses_add_product', [ProductController::class, 'proses_add_product'])->name('proses_add_product');
+    Route::post('/proses_edit_product', [ProductController::class, 'proses_edit_product'])->name('proses_edit_product');
     Route::get('/exportexcel', [ProductController::class, 'export'])->name('exportexcel');
     Route::get('/exportcsv', [ProductController::class, 'exportcsv'])->name('exportcsv');
+    Route::get('/delete_product/product/{id}', [ProductController::class, 'delete_product'])->name('product.delete_product');
 
 
     //kategori
@@ -66,6 +68,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/satuan', [SatuanController::class, 'index'])->name('satuan');
     Route::get('/search_satuan', [SatuanController::class, 'search_satuan'])->name('search_satuan');
     Route::post('/proses_add_satuan', [SatuanController::class, 'proses_add_satuan'])->name('proses_add_satuan');
+    Route::post('/proses_edit_satuan', [SatuanController::class, 'proses_edit_satuan'])->name('proses_edit_satuan');
+    Route::get('/delete_satuan/satuan/{id}', [SatuanController::class, 'delete_satuan'])->name('satuan.delete');
 
     //cabang
     Route::get('/cabang', [CabangController::class, 'index'])->name('cabang');
@@ -84,7 +88,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/changejumlah', [OrderController::class, 'changejumlah'])->name('order.change.jml');
     Route::get('/gettotal', [OrderController::class, 'gettotal'])->name('order.gettotal');
     Route::get('/add_orderdfix', [OrderController::class, 'add_orderdfix'])->name('order.add_orderdfix');
-
     Route::get('/orders/delete', [OrderController::class, 'delete'])->name('orders.delete');
     Route::get('/orders/batal', [OrderController::class, 'batal'])->name('orders.batal');
+
+    //laporan
+    Route::get('/struck', [ProductController::class, 'laporan_struck'])->name('struck');
 });

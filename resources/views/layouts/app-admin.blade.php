@@ -328,6 +328,15 @@
 
                                                 </a>
                                             </li>
+                                            <li class="menu-item" aria-haspopup="true">
+                                                <a href="/struck" class="menu-link">
+                                                    <i class="menu-bullet menu-bullet-dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="menu-text">struck</span>
+
+                                                </a>
+                                            </li>
 
 
                                         </ul>
@@ -505,7 +514,7 @@
                         <x-jet-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();"
                             class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">
                             {{ __('Sign
-                                                                                                                                                                                                    Out') }}
+                                                                                                                                                                                                                                                                                                                                                                            Out') }}
                         </x-jet-dropdown-link>
                     </form>
 

@@ -34,6 +34,8 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
+        DB::statement('select sum(total) as total, sum(cash) as cash, sum(cashback) as cashback from cabangs c LEFT OUTER JOIN transaction t
+on c.id COLLATE utf8mb4_unicode_ci = t.id_cabang where t.id_cabang = ''');
         return view('dashboard');
     })->name('dashboard');
 });
@@ -44,6 +46,9 @@ Route::middleware(['auth'])->group(function () {
 
     //users
     Route::get('/users', [UsersController::class, 'index'])->name('users');
+    Route::post('/proses_add_users', [UsersController::class, 'proses_add_users'])->name('proses_add_users');
+    Route::post('/proses_edit_users', [UsersController::class, 'proses_edit_users'])->name('proses_edit_users');
+    Route::get('/delete_users/users/{id}', [UsersController::class, 'delete_users'])->name('users.delete_users');
 
     //product
     Route::get('/product', [ProductController::class, 'index'])->name('product');
@@ -74,10 +79,14 @@ Route::middleware(['auth'])->group(function () {
     //cabang
     Route::get('/cabang', [CabangController::class, 'index'])->name('cabang');
     Route::post('/proses_add_cabang', [CabangController::class, 'proses_add_cabang'])->name('proses_add_cabang');
+    Route::post('/proses_edit_cabang', [CabangController::class, 'proses_edit_cabang'])->name('proses_edit_cabang');
+    Route::get('/delete_cabang/cabang/{id}', [CabangController::class, 'delete_cabang'])->name('cabang.delete');
 
     //suplier
     Route::get('/suplier', [SuplierController::class, 'index'])->name('suplier');
     Route::post('/proses_add_suplier', [SuplierController::class, 'proses_add_suplier'])->name('proses_add_suplier');
+    Route::post('/proses_edit_suplier', [SuplierController::class, 'proses_edit_suplier'])->name('proses_edit_suplier');
+    Route::get('/delete_suplier/suplier/{id}', [SuplierController::class, 'delete_suplier'])->name('suplier.delete');
 
     //orders
     Route::get('/orders', [OrderController::class, 'index'])->name('orders');

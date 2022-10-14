@@ -43,7 +43,7 @@
                                 </label>
                                 <input type="text" name="id" id="id" class="form-control form-control-solid"
                                     placeholder="Generate Otomatis" readonly
-                                    value="{{ 'PRD' . rand(00000, 99999) * 30 }}" />
+                                    value="{{  . rand(00000, 99999) * 30 }}" />
                                 <span class="form-text text-muted">
                                     Generate
                                     Otomatis
@@ -84,8 +84,6 @@
                                     @foreach ($kategori as $a)
                                         <option value="{{ $a->nama_kategori }}">
                                             {{ $a->nama_kategori }}
-
-
                                         </option>
                                     @endforeach
                                 </select>
@@ -101,7 +99,7 @@
                                         Pilih Cabang
                                     </option>
                                     @foreach ($cabang as $a)
-                                        <option value="{{ $a->id }}">
+                                        <option value="{{ $a->id_cabang }}">
                                             {{ $a->nama_cabang }} - {{ $a->alamat }}
                                         </option>
                                     @endforeach

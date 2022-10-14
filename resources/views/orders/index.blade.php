@@ -155,7 +155,7 @@
                             <input type="text" class="form-control form-control-solid" placeholder="Generate Otomatis"
                                 readonly value="{{ $id_cabang }}" name="cabang" id="cabang" />
                             <input type="text" class="form-control form-control-solid" placeholder="Generate Otomatis"
-                                readonly value="{{ $user_level }}" name="id_cabang" id="id_cabang" hidden />
+                                readonly value="{{ $id_cabang }}" name="id_cabang" id="id_cabang" hidden />
                         </div>
                     </div>
                     <div class="col-md-5">

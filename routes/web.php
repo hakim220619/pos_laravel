@@ -1,17 +1,19 @@
 <?php
 
-use App\Http\Controllers\CabangController;
-use App\Http\Controllers\KategoriController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\LoginWithGoogleController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\SatuanController;
-use App\Http\Controllers\SuplierController;
-use App\Http\Controllers\UsersController;
+use App\Models\Users;
 use App\Models\cabang;
 use App\Models\Kategori;
-use App\Models\Users;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\CabangController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SatuanController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SuplierController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LoginWithGoogleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,16 +35,20 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        DB::statement('select sum(total) as total, sum(cash) as cash, sum(cashback) as cashback from cabangs c LEFT OUTER JOIN transaction t
-on c.id COLLATE utf8mb4_unicode_ci = t.id_cabang where t.id_cabang = ''');
-        return view('dashboard');
-    })->name('dashboard');
+    //     Route::get('/dashboard', function () {
+    //         $tot = DB::select('select t.id_cabang, sum(total) as total, sum(cash) as cash, sum(cashback) as cashback from transaction t 
+    // left join cabangs c on t.id_cabang COLLATE utf8mb4_general_ci = t.id_cabang group by t.id_cabang');
+    //         dd($tot);
+    //         return view('dashboard', compact('tot'));
+    //     })->name('dashboard');
 });
 Route::get('auth/google', [LoginWithGoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [LoginWithGoogleController::class, 'handleGoogleCallback']);
 
 Route::middleware(['auth'])->group(function () {
+
+    //dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     //users
     Route::get('/users', [UsersController::class, 'index'])->name('users');

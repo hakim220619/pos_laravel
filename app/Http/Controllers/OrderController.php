@@ -31,7 +31,8 @@ class OrderController extends Controller
 
     public function load_data_product()
     {
-        $data = DB::select("SELECT * FROM products WHERE id NOT IN (SELECT id_barang FROM `order`)");
+        $id_cabang = Auth::user()->id_cabang;
+        $data = DB::select("SELECT * FROM products WHERE id_cabang = '$id_cabang' and id NOT IN (SELECT id_barang FROM `order`)");
         echo json_encode($data);
     }
     public function add_orders(request $request)

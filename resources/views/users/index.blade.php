@@ -175,7 +175,7 @@
                                                                                     Pilih Cabang
                                                                                 </option>
                                                                                 @foreach ($cabang as $ab)
-                                                                                    <option value="{{ $ab->id }}"
+                                                                                    <option value="{{ $ab->id_cabang }}"
                                                                                         {{ $ab->id == $a->id_cabang ? 'selected' : '' }}>
                                                                                         {{ $ab->nama_cabang }} -
                                                                                         {{ $ab->alamat }}

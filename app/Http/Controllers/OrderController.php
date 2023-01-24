@@ -149,7 +149,7 @@ class OrderController extends Controller
         DB::table('order')->where('id', $request['id'])->delete();
         return response()->json([
             'success' => true,
-            'message' => 'Product Berhasil di Tambah',
+            'message' => 'Product Berhasil diTambah',
         ]);
     }
     public function batal(Request $request)
@@ -158,7 +158,7 @@ class OrderController extends Controller
             DB::table('order')->where('id_user', $request['id_user'])->delete();
             return response()->json([
                 'success' => true,
-                'message' => 'Product Berhasil di Tambah',
+                'message' => 'Product Berhasil diTambah',
             ]);
         } catch (Exception $e) {
             return response([

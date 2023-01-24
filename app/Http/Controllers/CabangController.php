@@ -37,7 +37,7 @@ class CabangController extends Controller
         DB::table('cabangs')
             ->where("id", $request->id)
             ->update(['nama_cabang' => $request->nama_cabang, 'alamat' => $request->alamat]);
-        alert()->success('Berhasil!!!', 'Cabang Berhasil DI Ubah');
+        alert()->success('Berhasil!!!', 'Cabang Berhasil DIUbah');
         return redirect()->route('cabang');
     }
     public function delete_cabang($id)
@@ -45,7 +45,7 @@ class CabangController extends Controller
         try {
             // dd($id);
             DB::table('cabangs')->where('id', $id)->delete();
-            Alert::success('Cabang Berhasil Di Hapus');
+            Alert::success('Cabang Berhasil DiHapus');
             return redirect()->route('cabang');
         } catch (Exception $e) {
             return response([

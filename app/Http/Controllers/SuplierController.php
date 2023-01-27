@@ -28,7 +28,7 @@ class SuplierController extends Controller
         DB::table('supliers')
             ->where("id", $request->id)
             ->update(['nama_suplier' => $request->nama_suplier, 'alamat_suplier' => $request->alamat_suplier, 'tlp' => $request->tlp]);
-        alert()->success('Berhasil!!!', 'Suplier Berhasil DI Ubah');
+        alert()->success('Berhasil!!!', 'Suplier Berhasil dI Ubah');
         return redirect()->route('suplier');
     }
     public function delete_suplier($id)
@@ -36,7 +36,7 @@ class SuplierController extends Controller
         try {
             // dd($id);
             DB::table('supliers')->where('id', $id)->delete();
-            Alert::success('Suplier Berhasil Di Hapus');
+            Alert::success('Suplier Berhasil di Hapus');
             return redirect()->route('suplier');
         } catch (Exception $e) {
             return response([

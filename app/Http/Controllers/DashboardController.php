@@ -12,6 +12,6 @@ class DashboardController extends Controller
         $tot = DB::select(' select id_cabang, sum(total) as total from transaction group by id_cabang');
         // dd($tot);
         return view('dashboard', compact('tot'));
-           return view('dashboard', compact('tot'));
+          
     }
 }

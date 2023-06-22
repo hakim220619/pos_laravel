@@ -12,7 +12,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7",
-        "livewire/livewire": "^2.5",
+        "livewire/livewire": "^2.11",
         "maatwebsite/excel": "^3.1",
         "psr/simple-cache": "^2.0",
         "realrashid/sweet-alert": "^5.1"

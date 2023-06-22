@@ -12,7 +12,7 @@ if [ -z "$self" ]; then
     self="$selfArg"
 fi
 
-dir=$(cd "${self%[/\\]*}" > /dev/null; cd '../laravel/sail/bin' && pwd)
+dir=$(cd "${self%[/\\]*}" > /dev/null; cd ../laravel/sail/bin && pwd)
 
 if [ -d /proc/cygdrive ]; then
     case $(which php) in
@@ -23,7 +23,7 @@ if [ -d /proc/cygdrive ]; then
     esac
 fi
 
-export COMPOSER_RUNTIME_BIN_DIR=$(cd "${self%[/\\]*}" > /dev/null; pwd)
+export COMPOSER_RUNTIME_BIN_DIR="$(cd "${self%[/\\]*}" > /dev/null; pwd)"
 
 # If bash is sourcing this file, we have to source the target as well
 bashSource="$BASH_SOURCE"
